@@ -1,38 +1,46 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: 'Simpler';
-  src: url('/fonts/Simpler-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Simpler';
-  src: url('/fonts/Simpler-Bold.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-}
-
-body {
-  font-family: 'Simpler', system-ui, -apple-system, sans-serif;
-  background-color: #0F0F11;
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: white;
+  background: #0f0f11;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
 }
 
-/* Custom scrollbar for toolbar */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #2A2A2E;
   border-radius: 4px;
+  background: #2a2a2e;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb:active {
-  background: #3F3F46;
+  background: #3f3f46;
 }
 
 @page {
@@ -43,23 +51,26 @@ body {
   aside {
     display: none !important;
   }
+
   body {
-    background-color: white !important;
     margin: 0;
     padding: 0;
+    background: white !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
+
   main {
     padding: 0 !important;
-    background-color: white !important;
+    background: white !important;
   }
+
   .shadow-inner {
-    box-shadow: none !important;
-    border: none !important;
+    border: 0 !important;
     border-radius: 0 !important;
+    box-shadow: none !important;
   }
-  /* Ensure the title area is completely hidden in print */
+
   .print\:hidden {
     display: none !important;
   }

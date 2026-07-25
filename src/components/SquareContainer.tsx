@@ -1,34 +1,38 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
-export function SquareContainer({ children, className, style }: { children: React.ReactNode, className?: string, style?: React.CSSProperties }) {
+interface SquareContainerProps {
+  children: ReactNode;
+  className?: string;
+  style?: CSSProperties;
+}
+
+export function SquareContainer({ children, className = '', style }: SquareContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState<number | null>(null);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-    
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const { width, height } = entry.contentRect;
-        // Leave a tiny bit of padding to avoid scrollbars
-        setSize(Math.floor(Math.min(width, height)));
-      }
+
+    const observer = new ResizeObserver(([entry]) => {
+      if (!entry) return;
+      setSize(Math.floor(Math.min(entry.contentRect.width, entry.contentRect.height)));
     });
-    
+
     observer.observe(container);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div ref={containerRef} className="flex-1 w-full h-full flex items-center justify-center min-h-0 min-w-0 print:block print:w-full print:h-auto">
-      <div 
-        className={`${className || ''} print:!w-full print:!h-auto print:aspect-square`} 
-        style={{ 
-          ...style, 
-          width: size !== null ? size : '100%', 
-          height: size !== null ? size : 'auto',
-          aspectRatio: size === null ? '1 / 1' : undefined
+    <div ref={containerRef} className="flex h-full min-h-0 w-full min-w-0 flex-1 items-center justify-center print:block print:h-auto print:w-full">
+      <div
+        className={`${className} print:aspect-square print:h-auto! print:w-full!`}
+        style={{
+          ...style,
+          width: size ?? '100%',
+          height: size ?? 'auto',
+          aspectRatio: size === null ? '1 / 1' : undefined,
         }}
       >
         {children}

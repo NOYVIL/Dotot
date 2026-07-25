@@ -1,159 +1,140 @@
-import React, { forwardRef, useEffect, useRef, useCallback } from 'react';
-import { GridType, LineType, Path, Point } from '../types';
+import { forwardRef, useCallback, useEffect, useRef } from 'react';
+import type { Dispatch, MouseEvent as ReactMouseEvent, SetStateAction, TouchEvent as ReactTouchEvent } from 'react';
+import type { LineType, Path, Point } from '../types';
 import { drawPath } from '../utils/drawing';
 
 interface CanvasAreaProps {
-  gridType: GridType;
   lineType: LineType;
   lineSize: number;
   lineOpacity: number;
   paths: Path[];
-  setPaths: React.Dispatch<React.SetStateAction<Path[]>>;
+  setPaths: Dispatch<SetStateAction<Path[]>>;
 }
 
 export const CanvasArea = forwardRef<HTMLCanvasElement, CanvasAreaProps>(
-  ({ gridType, lineType, lineSize, lineOpacity, paths, setPaths }, ref) => {
+  ({ lineType, lineSize, lineOpacity, paths, setPaths }, forwardedRef) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const internalCanvasRef = useRef<HTMLCanvasElement>(null);
-    
-    // Mutable state for active drawing to bypass React render cycle for performance
+    const canvasRef = useRef<HTMLCanvasElement>(null);
     const isDrawingRef = useRef(false);
     const currentPathRef = useRef<Path | null>(null);
 
-    // Sync external ref
     useEffect(() => {
-      if (typeof ref === 'function') {
-        ref(internalCanvasRef.current);
-      } else if (ref) {
-        ref.current = internalCanvasRef.current;
+      if (typeof forwardedRef === 'function') {
+        forwardedRef(canvasRef.current);
+      } else if (forwardedRef) {
+        forwardedRef.current = canvasRef.current;
       }
-    }, [ref]);
+    }, [forwardedRef]);
 
     const render = useCallback(() => {
-      const canvas = internalCanvasRef.current;
+      const canvas = canvasRef.current;
       if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
+      const context = canvas.getContext('2d');
+      if (!context) return;
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      const baseRes = 800;
-      const scaleX = canvas.width / baseRes;
-      const scaleY = canvas.height / baseRes;
-      
-      ctx.save();
-      ctx.scale(scaleX, scaleY);
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.save();
+      context.scale(canvas.width / 800, canvas.height / 800);
 
-      paths.forEach(p => p && drawPath(ctx, p));
-      if (currentPathRef.current) {
-        drawPath(ctx, currentPathRef.current);
-      }
-      
-      ctx.restore();
+      paths.forEach((path) => drawPath(context, path));
+      if (currentPathRef.current) drawPath(context, currentPathRef.current);
+
+      context.restore();
     }, [paths]);
 
-    // Handle Resize
     useEffect(() => {
       const container = containerRef.current;
-      const canvas = internalCanvasRef.current;
+      const canvas = canvasRef.current;
       if (!container || !canvas) return;
 
-      const resizeObserver = new ResizeObserver(entries => {
-        for (let entry of entries) {
-          const ratio = window.devicePixelRatio || 1;
-          // When printing, devicePixelRatio might not scale correctly for high DPI print,
-          // but we can enforce a minimum crispness ratio (e.g. 2)
-          const scale = Math.max(ratio, 2);
-          canvas.width = entry.contentRect.width * scale;
-          canvas.height = entry.contentRect.height * scale;
-          render();
-        }
+      const observer = new ResizeObserver(([entry]) => {
+        if (!entry) return;
+        const scale = Math.max(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(entry.contentRect.width * scale);
+        canvas.height = Math.round(entry.contentRect.height * scale);
+        render();
       });
 
-      resizeObserver.observe(container);
-      return () => resizeObserver.disconnect();
+      observer.observe(container);
+      return () => observer.disconnect();
     }, [render]);
 
-    // Full render when props change
-    useEffect(() => {
-      render();
-    }, [render]);
+    useEffect(render, [render]);
 
-    const getCoordinates = (e: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent): Point | null => {
-      const canvas = internalCanvasRef.current;
+    const getCoordinates = (
+      event: ReactMouseEvent | ReactTouchEvent,
+    ): Point | null => {
+      const canvas = canvasRef.current;
       if (!canvas) return null;
-      const rect = canvas.getBoundingClientRect();
-      let clientX, clientY;
 
-      if ('touches' in e) {
-        clientX = (e as TouchEvent).touches[0].clientX;
-        clientY = (e as TouchEvent).touches[0].clientY;
+      const rect = canvas.getBoundingClientRect();
+      let clientX: number;
+      let clientY: number;
+
+      if ('touches' in event) {
+        const touch = event.touches[0];
+        if (!touch) return null;
+        clientX = touch.clientX;
+        clientY = touch.clientY;
       } else {
-        clientX = (e as MouseEvent).clientX;
-        clientY = (e as MouseEvent).clientY;
+        clientX = event.clientX;
+        clientY = event.clientY;
       }
 
-      const baseRes = 800;
-      const scaleX = baseRes / rect.width;
-      const scaleY = baseRes / rect.height;
-
       return {
-        x: (clientX - rect.left) * scaleX,
-        y: (clientY - rect.top) * scaleY,
+        x: ((clientX - rect.left) / rect.width) * 800,
+        y: ((clientY - rect.top) / rect.height) * 800,
       };
     };
 
-    const handleStart = (e: React.MouseEvent | React.TouchEvent) => {
-      const point = getCoordinates(e);
+    const handleStart = (event: ReactMouseEvent | ReactTouchEvent) => {
+      const point = getCoordinates(event);
       if (!point) return;
+
       isDrawingRef.current = true;
       currentPathRef.current = {
         points: [point],
         type: lineType,
         size: lineSize,
-        opacity: lineOpacity
+        opacity: lineOpacity,
       };
-      render(); // draw the initial dot
+      render();
     };
 
-    const handleMove = (e: React.MouseEvent | React.TouchEvent) => {
+    const handleMove = (event: ReactMouseEvent | ReactTouchEvent) => {
       if (!isDrawingRef.current || !currentPathRef.current) return;
-      const point = getCoordinates(e);
+      const point = getCoordinates(event);
       if (!point) return;
 
       currentPathRef.current.points.push(point);
-      
-      // Perform an optimized render of everything on each move.
-      // Modern browsers easily handle hundreds of paths at 60fps.
-      render(); 
+      render();
     };
 
     const handleEnd = () => {
-      if (isDrawingRef.current && currentPathRef.current) {
-        const finishedPath = currentPathRef.current;
-        setPaths(prev => [...prev, finishedPath]);
-        currentPathRef.current = null;
-        isDrawingRef.current = false;
-        // render() is automatically called by useEffect when paths change
-      }
+      if (!isDrawingRef.current || !currentPathRef.current) return;
+
+      const finishedPath = currentPathRef.current;
+      currentPathRef.current = null;
+      isDrawingRef.current = false;
+      setPaths((current) => [...current, finishedPath]);
     };
 
     return (
-      <div ref={containerRef} className="absolute inset-0 overflow-hidden cursor-crosshair touch-none">
+      <div ref={containerRef} className="absolute inset-0 cursor-crosshair touch-none overflow-hidden">
         <canvas
-          ref={internalCanvasRef}
+          ref={canvasRef}
           onMouseDown={handleStart}
           onMouseMove={handleMove}
           onMouseUp={handleEnd}
-          onMouseOut={handleEnd}
+          onMouseLeave={handleEnd}
           onTouchStart={handleStart}
           onTouchMove={handleMove}
           onTouchEnd={handleEnd}
-          className="absolute top-0 left-0 w-full h-full"
+          className="absolute left-0 top-0 h-full w-full"
         />
       </div>
     );
-  }
+  },
 );
 
 CanvasArea.displayName = 'CanvasArea';

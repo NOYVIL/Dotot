@@ -1,104 +1,98 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import { useState, useRef, useEffect } from 'react';
-import { Toolbar } from './components/Toolbar';
+import { useEffect, useRef, useState } from 'react';
 import { CanvasArea } from './components/CanvasArea';
 import { SquareContainer } from './components/SquareContainer';
-import { Path, GridType, LineType } from './types';
+import { Toolbar } from './components/Toolbar';
+import type { GridType, LineType, Path } from './types';
+import { normalizeStoredGrid } from './utils/assets';
+
+function readNumber(key: string, fallback: number): number {
+  const raw = localStorage.getItem(key);
+  const parsed = raw === null ? Number.NaN : Number(raw);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+function readPaths(): Path[] {
+  try {
+    const raw = localStorage.getItem('drawing_paths');
+    const parsed: unknown = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? (parsed as Path[]) : [];
+  } catch {
+    return [];
+  }
+}
 
 export default function App() {
-  const [gridType, setGridType] = useState<GridType>(() => {
-    let saved = localStorage.getItem('drawing_gridType');
-    if (saved && saved.endsWith('.svg')) {
-      saved = saved.replace('.svg', '.png');
-    }
-    return saved || '/grids/grid1.png';
-  });
-  const [lineType, setLineType] = useState<LineType>(() => {
-    return (localStorage.getItem('drawing_lineType') as LineType) || 'rounded';
-  });
-  const [lineSize, setLineSize] = useState<number>(() => {
-    const saved = localStorage.getItem('drawing_lineSize');
-    return saved ? Number(saved) : 5;
-  });
-  const [lineOpacity, setLineOpacity] = useState<number>(() => {
-    const saved = localStorage.getItem('drawing_lineOpacity');
-    return saved ? Number(saved) : 100;
-  });
-  
-  const [paths, setPaths] = useState<Path[]>(() => {
-    const saved = localStorage.getItem('drawing_paths');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [gridType, setGridType] = useState<GridType>(() =>
+    normalizeStoredGrid(localStorage.getItem('drawing_gridType')),
+  );
+  const [lineType, setLineType] = useState<LineType>(() =>
+    (localStorage.getItem('drawing_lineType') as LineType | null) ?? 'rounded',
+  );
+  const [lineSize, setLineSize] = useState(() => readNumber('drawing_lineSize', 5));
+  const [lineOpacity, setLineOpacity] = useState(() => readNumber('drawing_lineOpacity', 100));
+  const [paths, setPaths] = useState<Path[]>(readPaths);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    localStorage.setItem('drawing_gridType', gridType || '');
+    localStorage.setItem('drawing_gridType', gridType ?? '');
     localStorage.setItem('drawing_lineType', lineType);
     localStorage.setItem('drawing_lineSize', String(lineSize));
     localStorage.setItem('drawing_lineOpacity', String(lineOpacity));
     localStorage.setItem('drawing_paths', JSON.stringify(paths));
-  }, [gridType, lineType, lineSize, lineOpacity, paths]);
+  }, [gridType, lineOpacity, lineSize, lineType, paths]);
 
   useEffect(() => {
-    setPaths(prevPaths => 
-      prevPaths.map(p => ({
-        ...p,
+    setPaths((current) =>
+      current.map((path) => ({
+        ...path,
         type: lineType,
         size: lineSize,
-        opacity: lineOpacity
-      }))
+        opacity: lineOpacity,
+      })),
     );
-  }, [lineType, lineSize, lineOpacity]);
+  }, [lineOpacity, lineSize, lineType]);
 
   useEffect(() => {
-    if (window.location.search.includes('print=true')) {
-      // Give the canvas a moment to render before printing
-      setTimeout(() => {
-        const oldTitle = document.title;
-        document.title = "";
-        window.print();
-        document.title = oldTitle;
-      }, 1000);
-    }
+    if (!new URLSearchParams(window.location.search).has('print')) return;
+
+    const timeout = window.setTimeout(() => {
+      const oldTitle = document.title;
+      document.title = '';
+      window.print();
+      document.title = oldTitle;
+    }, 600);
+
+    return () => window.clearTimeout(timeout);
   }, []);
-
-  const handleUndo = () => {
-    setPaths((prev) => prev.slice(0, -1));
-  };
-
-  const handleClear = () => {
-    setPaths([]);
-  };
 
   const handlePrint = () => {
     const oldTitle = document.title;
-    document.title = "";
+    document.title = '';
+
     if (window.self !== window.top) {
-      // If we are in an iframe (like the AI Studio preview window)
       const url = new URL(window.location.href);
       url.searchParams.set('print', 'true');
-      const newWindow = window.open(url.toString(), '_blank');
-      if (!newWindow) {
-        alert("Please allow pop-ups to open the print window, or click the 'Open in new tab' arrow at the top right.");
+      const opened = window.open(url.toString(), '_blank', 'noopener,noreferrer');
+      if (!opened) {
+        window.alert('Please allow pop-ups so the print window can open.');
       }
-      setTimeout(() => { document.title = oldTitle; }, 100);
-    } else {
-      window.print();
-      document.title = oldTitle;
+      window.setTimeout(() => {
+        document.title = oldTitle;
+      }, 100);
+      return;
     }
+
+    window.print();
+    document.title = oldTitle;
   };
 
-  const handleGridTypeChange = (newGridType: GridType) => {
-    setGridType(newGridType);
+  const handleGridTypeChange = (nextGrid: GridType) => {
+    setGridType(nextGrid);
     setPaths([]);
   };
 
   return (
-    <div className="flex h-screen w-full bg-[#0F0F11] overflow-hidden text-white">
+    <div className="flex h-dvh w-full overflow-hidden bg-[#0F0F11] text-white">
       <Toolbar
         gridType={gridType}
         setGridType={handleGridTypeChange}
@@ -108,32 +102,31 @@ export default function App() {
         setLineSize={setLineSize}
         lineOpacity={lineOpacity}
         setLineOpacity={setLineOpacity}
-        onUndo={handleUndo}
-        onClear={handleClear}
+        onUndo={() => setPaths((current) => current.slice(0, -1))}
+        onClear={() => setPaths([])}
         onPrint={handlePrint}
         canUndo={paths.length > 0}
       />
-      <main className="flex-1 h-full bg-[#F5F5F7] flex flex-col p-6 relative overflow-hidden print:p-0 print:items-center print:justify-center">
-        {/* Title area */}
-        <div className="mb-16 h-0 relative flex justify-center print:hidden">
-          <div className="absolute top-[-2px] text-center text-[#16161A] select-none w-full">
-            <h2 className="text-2xl font-bold tracking-tight mb-0.5">Connect dots to form a letter</h2>
+
+      <main className="relative flex h-full min-w-0 flex-1 flex-col overflow-hidden bg-[#F5F5F7] p-6 print:items-center print:justify-center print:p-0">
+        <div className="relative mb-16 flex h-0 justify-center print:hidden">
+          <div className="absolute top-[-2px] w-full select-none text-center text-[#16161A]">
+            <h2 className="mb-0.5 text-2xl font-bold tracking-tight">Connect dots to form a letter</h2>
             <p className="text-xs font-medium opacity-60">(not by numbers)</p>
           </div>
         </div>
-        {/* Inner canvas wrapper */}
-        <SquareContainer 
-          className="bg-white rounded-xl shadow-inner border border-zinc-200 relative overflow-hidden"
+
+        <SquareContainer
+          className="relative overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-inner"
           style={{
-            backgroundImage: gridType ? `url(${gridType}?v=3)` : 'none',
-            backgroundSize: 'contain',
+            backgroundImage: gridType ? `url("${gridType}")` : 'none',
             backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'contain',
           }}
         >
           <CanvasArea
             ref={canvasRef}
-            gridType={gridType}
             lineType={lineType}
             lineSize={lineSize}
             lineOpacity={lineOpacity}

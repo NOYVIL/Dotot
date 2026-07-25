@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "DOT",
+  "short_name": "DOT",
+  "description": "A dot-grid drawing application.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0F0F11",
+  "theme_color": "#0F0F11",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
