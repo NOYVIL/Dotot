@@ -1,13 +1,14 @@
 {
   "name": "DOT",
   "short_name": "DOT",
-  "start_url": "/",
+"start_url": "/Dotot/",
+  "scope": "/Dotot/",
   "display": "standalone",
   "background_color": "#0F0F11",
   "theme_color": "#0F0F11",
   "icons": [
     {
-      "src": "/logo2.svg",
+      "src": "/Dotot/logo2.svg",
       "sizes": "192x192 512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"
