@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Simpler';
+  src: url('/fonts/Simpler-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Simpler';
+  src: url('/fonts/Simpler-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Simpler', system-ui, -apple-system, sans-serif;
+  background-color: #0F0F11;
+  color: white;
+}
+
+/* Custom scrollbar for toolbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #2A2A2E;
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:active {
+  background: #3F3F46;
+}
+
+@page {
+  margin: 0;
+}
+
+@media print {
+  aside {
+    display: none !important;
+  }
+  body {
+    background-color: white !important;
+    margin: 0;
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  main {
+    padding: 0 !important;
+    background-color: white !important;
+  }
+  .shadow-inner {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+  /* Ensure the title area is completely hidden in print */
+  .print\:hidden {
+    display: none !important;
+  }
+}
