@@ -87,6 +87,24 @@ export default function App() {
     window.print();
     document.title = oldTitle;
   };
+  const handleSave = async () => {
+  const postcard = document.querySelector('.print-postcard') as HTMLElement | null;
+  if (!postcard) return;
+
+  try {
+    const dataUrl = await toPng(postcard, {
+      cacheBust: true,
+      pixelRatio: 2,
+    });
+
+    const link = document.createElement('a');
+    link.download = 'dot-postcard.png';
+    link.href = dataUrl;
+    link.click();
+  } catch (error) {
+    console.error('Failed to save postcard:', error);
+  }
+};
 
   const handleGridTypeChange = (nextGrid: GridType) => {
     setGridType(nextGrid);
@@ -106,6 +124,7 @@ export default function App() {
         setLineOpacity={setLineOpacity}
         onUndo={() => setPaths((current) => current.slice(0, -1))}
         onClear={() => setPaths([])}
+        onSave={handleSave}
         onPrint={handlePrint}
         canUndo={paths.length > 0}
       />
