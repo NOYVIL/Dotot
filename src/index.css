@@ -79,6 +79,13 @@ input {
     height: 100%;
     object-fit: contain;
   }
+  .print-grid {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
   aside {
     display: none !important;
   }
