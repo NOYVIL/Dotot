@@ -128,7 +128,7 @@ export function Toolbar({
             type="button"
             onClick={onUndo}
             disabled={!canUndo}
-            className="flex-1 cursor-pointer rounded border border-[#2A2A2E] bg-zinc-800 px-2 py-3 text-[8px] font-bold uppercase flex-1 cursor-pointer rounded border border-[#2A2A2E] bg-zinc-800 px-2 py-3 text-[13px] font-bold uppercase tracking-[0.05em] text-white transition-all active:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-40" text-white transition-all active:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex-1 cursor-pointer rounded border border-[#2A2A2E] bg-zinc-800 px-2 py-3 text-[8px] font-bold uppercase flex-1 cursor-pointer rounded border border-[#2A2A2E] bg-zinc-800 px-2 py-3 text-[13px] font-bold uppercase tracking-[0.05em] text-white transition-all active:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-40" 
           >
             Undo
           </button>
