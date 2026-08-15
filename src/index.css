@@ -20,6 +20,35 @@
   aspect-ratio: 105 / 148;
   overflow: hidden;
 }
+.print-postcard-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.print-grid {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.print-drawing {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  transform: translateY(-50%);
+}
+
+.print-drawing canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
 :root {
  font-family: 'Simpler', sans-serif;
   color: white;
