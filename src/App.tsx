@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { toPng } from 'html-to-image';
 import { CanvasArea } from './components/CanvasArea';
 import { PrintCanvas } from './components/PrintCanvas';
 import { SquareContainer } from './components/SquareContainer';
@@ -87,28 +86,59 @@ export default function App() {
     window.print();
     document.title = oldTitle;
   };
- const handleSave = async () => {
-  const postcard = document.querySelector('.print-postcard') as HTMLElement | null;
-  if (!postcard) return;
+const handleSave = async () => {
+  const width = 1050;
+  const height = 1480;
+  const gridSize = width;
+  const gridY = (height - gridSize) / 2;
 
-  try {
-    const dataUrl = await toPng(postcard, {
-      cacheBust: true,
-      pixelRatio: 2,
-      width: 1050,
-      height: 1480,
-      style: {
-        position: 'relative',
-        left: '0',
-        top: '0',
-        width: '1050px',
-        height: '1480px',
-      },
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+
+  const context = canvas.getContext('2d');
+  if (!context) return;
+
+  const loadImage = (src: string) =>
+    new Promise<HTMLImageElement>((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = src;
     });
 
+  try {
+    // 1. הגלויה
+    const postcard = await loadImage(
+      `${import.meta.env.BASE_URL}postcard.svg`,
+    );
+    context.drawImage(postcard, 0, 0, width, height);
+
+    // 2. הגריד
+    if (gridType) {
+      const grid = await loadImage(gridType);
+      context.drawImage(grid, 0, gridY, gridSize, gridSize);
+    }
+
+    // 3. הציור
+    const drawingCanvas = document.querySelector(
+      '.print-drawing canvas',
+    ) as HTMLCanvasElement | null;
+
+    if (drawingCanvas) {
+      context.drawImage(
+        drawingCanvas,
+        0,
+        gridY,
+        gridSize,
+        gridSize,
+      );
+    }
+
+    // 4. שמירה
     const link = document.createElement('a');
     link.download = 'dot-postcard.png';
-    link.href = dataUrl;
+    link.href = canvas.toDataURL('image/png');
     link.click();
   } catch (error) {
     console.error('Failed to save postcard:', error);
