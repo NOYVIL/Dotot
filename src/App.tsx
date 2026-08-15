@@ -109,11 +109,18 @@ export default function App() {
       />
 
       <main className="relative flex h-full min-w-0 flex-1 flex-col overflow-hidden bg-[#F5F5F7] p-6 print:items-center print:justify-center print:p-0">
-        <div className="print-postcard">
+     <div className="print-postcard">
   <img
     src={`${import.meta.env.BASE_URL}postcard.svg`}
     alt=""
     className="print-postcard-bg"
+  />
+
+  <div
+    className="print-grid"
+    style={{
+      backgroundImage: gridType ? `url("${gridType}")` : 'none',
+    }}
   />
 </div>
         <div className="relative mb-16 flex h-0 justify-center print:hidden">
