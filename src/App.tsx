@@ -123,6 +123,9 @@ export default function App() {
       backgroundImage: gridType ? `url("${gridType}")` : 'none',
     }}
   />
+       <div className="print-drawing">
+  <PrintCanvas paths={paths} />
+</div>
 </div>
         <div className="relative mb-16 flex h-0 justify-center print:hidden">
           <div className="absolute top-[-2px] w-full select-none text-center text-[#16161A]">
