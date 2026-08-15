@@ -1,4 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
-  <defs><pattern id="p" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#d1d5db" stroke-width="1"/></pattern></defs>
-  <rect width="800" height="800" fill="white"/><rect width="800" height="800" fill="url(#p)"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 453.54 453.54">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: MaccabiBlock-Bold, MaccabiBlock;
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      .cls-1, .cls-2 {
+        fill: #231f20;
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <rect class="cls-3" width="453.54" height="453.54"/>
+  <g>
+    <path class="cls-2" d="M181.15,89.75c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M283.58,89.75c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M311.54,130.36c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M153.18,130.36c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M275.89,204.91c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M188.84,204.91c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M259.19,291.83c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M205.54,291.83c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M322.22,338.35c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M142.5,338.63c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M373.53,316.99c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M91.2,317.28c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M353.97,184.91c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M110.76,185.19c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M388.17,213.25c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M76.55,213.53c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M368.36,265.67c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M96.37,265.95c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M261.64,362.54c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M203.08,362.54c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+    <path class="cls-2" d="M232.36,99.58c0,2.71-2.2,4.91-4.91,4.91s-4.91-2.2-4.91-4.91,2.2-4.91,4.91-4.91,4.91,2.2,4.91,4.91"/>
+  </g>
+  <text class="cls-1" transform="translate(181.48 366.02)"><tspan x="0" y="0">1</tspan></text>
+  <text class="cls-1" transform="translate(197.75 280.62)"><tspan x="0" y="0">2</tspan></text>
+  <text class="cls-1" transform="translate(134.8 356.81)"><tspan x="0" y="0">3</tspan></text>
+  <text class="cls-1" transform="translate(264.56 366.02)"><tspan x="0" y="0">21</tspan></text>
+  <text class="cls-1" transform="translate(248.39 280.62)"><tspan x="0" y="0">20</tspan></text>
+  <text class="cls-1" transform="translate(311.33 356.53)"><tspan x="0" y="0">19</tspan></text>
+  <text class="cls-1" transform="translate(390.32 216.73)"><tspan x="0" y="0">16</tspan></text>
+  <text class="cls-1" transform="translate(371.38 269.15)"><tspan x="0" y="0">17</tspan></text>
+  <text class="cls-1" transform="translate(376.36 320.47)"><tspan x="0" y="0">18</tspan></text>
+  <text class="cls-1" transform="translate(343.15 173.69)"><tspan x="0" y="0">15</tspan></text>
+  <text class="cls-1" transform="translate(251.34 208.38)"><tspan x="0" y="0">14</tspan></text>
+  <text class="cls-1" transform="translate(314.55 133.83)"><tspan x="0" y="0">13</tspan></text>
+  <text class="cls-1" transform="translate(286.49 93.22)"><tspan x="0" y="0">12</tspan></text>
+  <text class="cls-1" transform="translate(221.46 88.35)"><tspan x="0" y="0">11</tspan></text>
+  <text class="cls-1" transform="translate(156.53 93.22)"><tspan x="0" y="0">10</tspan></text>
+  <text class="cls-1" transform="translate(131.57 133.83)"><tspan x="0" y="0">9</tspan></text>
+  <text class="cls-1" transform="translate(194.65 208.38)"><tspan x="0" y="0">8</tspan></text>
+  <text class="cls-1" transform="translate(103.06 173.97)"><tspan x="0" y="0">7</tspan></text>
+  <text class="cls-1" transform="translate(54.94 217)"><tspan x="0" y="0">6</tspan></text>
+  <text class="cls-1" transform="translate(74.83 269.43)"><tspan x="0" y="0">5</tspan></text>
+  <text class="cls-1" transform="translate(69.63 320.75)"><tspan x="0" y="0">4</tspan></text>
 </svg>
