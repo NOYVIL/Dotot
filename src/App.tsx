@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { toPng } from 'html-to-image';
 import { CanvasArea } from './components/CanvasArea';
 import { PrintCanvas } from './components/PrintCanvas';
 import { SquareContainer } from './components/SquareContainer';
