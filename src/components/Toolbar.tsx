@@ -128,7 +128,7 @@ export function Toolbar({
             type="button"
             onClick={onUndo}
             disabled={!canUndo}
-            className="flex-1 cursor-pointer rounded border border-[#2A2A2E] bg-zinc-800 px-2 py-3 text-[13px] font-bold uppercase flex-1 cursor-pointer rounded border border-[#2A2A2E] bg-zinc-800 px-2 py-3 text-[13px] font-bold uppercase tracking-[0.05em] text-white transition-all active:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-40" text-white transition-all active:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex-1 cursor-pointer rounded border border-[#2A2A2E] bg-zinc-800 px-2 py-3 text-[9px] font-bold uppercase flex-1 cursor-pointer rounded border border-[#2A2A2E] bg-zinc-800 px-2 py-3 text-[13px] font-bold uppercase tracking-[0.05em] text-white transition-all active:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-40" text-white transition-all active:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Undo
           </button>
@@ -136,7 +136,7 @@ export function Toolbar({
             type="button"
             onClick={onClear}
             disabled={!canUndo}
-            className="flex-1 cursor-pointer rounded border border-[#2A2A2E] bg-zinc-800 px-2 py-3 text-[13px] font-bold uppercase tracking-[0.05em] text-red-400 transition-all hover:text-red-300 active:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex-1 cursor-pointer rounded border border-[#2A2A2E] bg-zinc-800 px-2 py-3 text-[9px] font-bold uppercase tracking-[0.05em] text-red-400 transition-all hover:text-red-300 active:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Clear
           </button>
@@ -144,7 +144,7 @@ export function Toolbar({
         <button
           type="button"
           onClick={onPrint}
-          className="w-full cursor-pointer rounded bg-white px-4 py-3 text-[13px] font-bold uppercase tracking-[0.05em] text-zinc-900 shadow-lg transition-all active:bg-zinc-200"
+          className="w-full cursor-pointer rounded bg-white px-4 py-3 text-[9px] font-bold uppercase tracking-[0.05em] text-zinc-900 shadow-lg transition-all active:bg-zinc-200"
         >
           Print
         </button>
