@@ -98,6 +98,8 @@ const handleSave = async () => {
 
   const context = canvas.getContext('2d');
   if (!context) return;
+  context.fillStyle = '#ffffff';
+context.fillRect(0, 0, width, height);
 
   const loadImage = (src: string) =>
     new Promise<HTMLImageElement>((resolve, reject) => {
