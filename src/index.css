@@ -23,7 +23,7 @@ body,
 
 button,
 input {
-  font: inherit;
+    font-family: inherit;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
