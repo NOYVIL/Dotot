@@ -13,6 +13,7 @@ interface ToolbarProps {
   onUndo: () => void;
   onClear: () => void;
   onPrint: () => void;
+  onSave: () => void;
   canUndo: boolean;
 }
 
@@ -28,6 +29,7 @@ export function Toolbar({
   onUndo,
   onClear,
   onPrint,
+  onSave,
   canUndo,
 }: ToolbarProps) {
   return (
