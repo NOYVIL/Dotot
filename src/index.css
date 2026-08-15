@@ -86,9 +86,13 @@ input {
   background-repeat: no-repeat;
   background-size: contain;
 }
-  .print-drawing {
+ .print-drawing {
   position: absolute;
-  inset: 0;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  transform: translateY(-50%);
 }
 
 .print-drawing canvas {
