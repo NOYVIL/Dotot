@@ -87,7 +87,7 @@ export default function App() {
     window.print();
     document.title = oldTitle;
   };
-  const handleSave = async () => {
+ const handleSave = async () => {
   const postcard = document.querySelector('.print-postcard') as HTMLElement | null;
   if (!postcard) return;
 
@@ -95,6 +95,15 @@ export default function App() {
     const dataUrl = await toPng(postcard, {
       cacheBust: true,
       pixelRatio: 2,
+      width: 1050,
+      height: 1480,
+      style: {
+        position: 'relative',
+        left: '0',
+        top: '0',
+        width: '1050px',
+        height: '1480px',
+      },
     });
 
     const link = document.createElement('a');
