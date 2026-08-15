@@ -12,6 +12,9 @@
   font-style: normal;
 }
 @import "tailwindcss";
+.print-postcard {
+  display: none;
+}
 
 :root {
  font-family: 'Simpler', sans-serif;
