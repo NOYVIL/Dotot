@@ -109,6 +109,13 @@ export default function App() {
       />
 
       <main className="relative flex h-full min-w-0 flex-1 flex-col overflow-hidden bg-[#F5F5F7] p-6 print:items-center print:justify-center print:p-0">
+        <div className="print-postcard">
+  <img
+    src={`${import.meta.env.BASE_URL}postcard.svg`}
+    alt=""
+    className="print-postcard-bg"
+  />
+</div>
         <div className="relative mb-16 flex h-0 justify-center print:hidden">
           <div className="absolute top-[-2px] w-full select-none text-center text-[#16161A]">
             <h2 className="mb-0.5 text-2xl font-bold tracking-tight">Connect dots to form a letter</h2>
