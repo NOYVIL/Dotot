@@ -64,6 +64,21 @@ input {
 }
 
 @media print {
+    .print-postcard {
+    display: block;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 105 / 148;
+    overflow: hidden;
+  }
+
+  .print-postcard-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
   aside {
     display: none !important;
   }
