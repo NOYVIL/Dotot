@@ -148,6 +148,12 @@ export function Toolbar({
         >
           Print
         </button>
+        <button
+  type="button"
+  className="w-full cursor-pointer rounded bg-white px-4 py-3 text-[12px] font-bold uppercase tracking-[0.05em] text-zinc-900 shadow-lg transition-all active:bg-zinc-200"
+>
+  Save
+</button>
       </div>
     </aside>
   );
