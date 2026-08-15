@@ -120,12 +120,9 @@ export function Toolbar({
               onChange={(event) => setLineOpacity(Number(event.target.value))}
               className="h-1 w-full cursor-pointer appearance-none rounded-lg bg-zinc-800 accent-zinc-400"
             />
-          </label>
-        </section>
-      </div>
+         </label>
 
-      <div className="mt-6 flex flex-col gap-3">
-        <div className="flex gap-3">
+<div className="flex gap-3 pt-2">
           <button
             type="button"
             onClick={onUndo}
@@ -143,6 +140,11 @@ export function Toolbar({
             Clear
           </button>
         </div>
+          </section>
+      </div>
+
+      <div className="mt-6 flex flex-col gap-3">
+      
        <div className="flex gap-3">
   <button
     type="button"
